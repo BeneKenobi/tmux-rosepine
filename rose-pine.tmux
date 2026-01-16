@@ -158,6 +158,9 @@ main() {
     local disable_active_window_menu
     disable_active_window_menu="$(get_tmux_option "@rose_pine_disable_active_window_menu" "")"
 
+    local show_session_name
+    show_session_name="$(get_tmux_option "@rose_pine_show_session" "on")"
+
     local show_current_program
     show_current_program="$(get_tmux_option "@rose_pine_show_current_program" "")"
     readonly show_current_program
@@ -278,6 +281,9 @@ main() {
     # TODO: Make it user-definable
     field_separator="#[fg=$thm_text]"$field_separator
 
+    local padding
+    padding="$(get_tmux_option "@rose_pine_padding" " ")"
+
     # END
 
     # local spacer
@@ -301,7 +307,7 @@ main() {
     readonly show_session="#[fg=#{?client_prefix,$thm_love,$thm_text}]$current_session_icon #[fg=$thm_text]#S"
 
     local show_user
-    readonly show_user="#[fg=$thm_iris]#(whoami)#[fg=$thm_subtle]$right_separator#[fg=$thm_subtle]$username_icon"
+    readonly show_user="#[fg=$thm_subtle]$username_icon#[fg=$thm_iris]#(whoami)"
 
     local show_host
     local hostname
@@ -311,10 +317,10 @@ main() {
         hostname="#H"
     fi
     readonly hostname
-    readonly show_host="#[fg=$thm_text]$hostname#[fg=$thm_subtle]$right_separator#[fg=$thm_subtle]$hostname_icon"
+    readonly show_host="#[fg=$thm_subtle]$hostname_icon#[fg=$thm_text]$hostname"
 
     local show_date_time
-    readonly show_date_time="#[fg=$thm_foam]$date_time#[fg=$thm_subtle]$right_separator#[fg=$thm_subtle]$date_time_icon #[fg=$thm_text]"
+    readonly show_date_time="#[fg=$thm_subtle]$date_time_icon#[fg=$thm_foam]$date_time"
 
     local show_directory
     readonly show_directory="#[fg=$thm_subtle]$current_folder_icon #[fg=$thm_rose]#{b:pane_current_path}"
@@ -392,27 +398,35 @@ main() {
     fi
 
     if [[ "$user" == "on" ]]; then
-        right_column=$right_column$show_user$field_separator
+        [[ -n "$right_column" ]] && right_column=$right_column"#[fg=$thm_subtle]$right_separator"
+        right_column=$right_column$show_user
     fi
 
     if [[ "$host" == "on" ]]; then
-        right_column=$right_column$show_host$field_separator
+        [[ -n "$right_column" ]] && right_column=$right_column"#[fg=$thm_subtle]$right_separator"
+        right_column=$right_column$show_host
     fi
 
     if [[ "$date_time" != "" ]]; then
-        right_column=$right_column$show_date_time$field_separator
+        [[ -n "$right_column" ]] && right_column=$right_column"#[fg=$thm_subtle]$right_separator"
+        right_column=$right_column$show_date_time
     fi
 
     if [[ "$directory" == "on" ]]; then
+        [[ -n "$right_column" ]] && right_column=$right_column"#[fg=$thm_subtle]$right_separator"
         right_column=$right_column$show_directory
     fi
 
     # The append and prepend sections are for inter-plugin compatibility
     # and extension
-    if [[ "$disable_active_window_menu" == "on" ]]; then
-        left_column=$show_session
+    if [[ "$show_session_name" == "on" && "$disable_active_window_menu" == "on" ]]; then
+        left_column=$padding$show_session
+    elif [[ "$show_session_name" == "on" ]]; then
+        left_column=$padding$show_session$field_separator$show_window
+    elif [[ "$disable_active_window_menu" != "on" ]]; then
+        left_column=$padding$show_window
     else
-        left_column=$show_session$field_separator$show_window
+        left_column=$padding
     fi
     #
     # Appending / Prepending custom user sections to
@@ -428,6 +442,9 @@ main() {
     if [[ "$status_right_append_section" != "" ]]; then
         right_column=$right_column$status_right_append_section
     fi
+
+    # Add padding to right side
+    right_column=$right_column$padding
 
     # We set the sections
     set status-left "$left_column"

@@ -59,6 +59,7 @@ set -g @rose_pine_bar_bg_disabled_color_option 'default'
 set -g @rose_pine_only_windows 'on' # Leaves only the window module, for max focus and space
 set -g @rose_pine_window_status_separator "  " # Changes the default icon that appears between window names
 set -g @rose_pine_disable_active_window_menu 'on' # Disables the menu that shows the active window on the left
+set -g @rose_pine_show_session 'on' # Show the session name on the left (default 'on', set to 'off' to hide)
 set -g @rose_pine_default_window_behavior 'on' # Forces tmux default window list behaviour
 
 set -g @rose_pine_show_current_program 'on' # Forces tmux to show the current running program as window name
@@ -70,6 +71,7 @@ set -g @rose_pine_left_separator ' > ' # The strings to use as separators are 1-
 set -g @rose_pine_right_separator ' < ' # Accepts both normal chars & nerdfont icons
 set -g @rose_pine_field_separator '  ' # Default is two-space-padded, but can be set to anything
 set -g @rose_pine_window_separator ' - ' # Replaces the default `:` between the window number and name
+set -g @rose_pine_padding ' ' # Padding on left and right edges of the status bar (default single space)
 
 # These are not padded
 set -g @rose_pine_session_icon '' # Changes the default icon to the left of the session name
