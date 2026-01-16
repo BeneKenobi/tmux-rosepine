@@ -110,7 +110,7 @@ main() {
 
     # Status bar
     set "status" "on"
-    set status-style "fg=$thm_pine,bg=$thm_base"
+    set status-style "fg=$thm_pine,bg=#{?client_prefix,$thm_hl_high,$thm_base}"
     # set monitor-activity "on"
     # Leave justify option to user
     # set status-justify "left"
@@ -363,15 +363,15 @@ main() {
     # It sets the base colors for active / inactive, no matter the window appearence switcher choice
     # TEST: This needs to be tested further
     if [[ "$bar_bg_disable" == "on" ]]; then
-        set status-style "fg=$thm_pine,bg=$bar_bg_disabled_color_option"
-        show_window_in_window_status="#[fg=$thm_iris,bg=$bar_bg_disabled_color_option]#I#[fg=$thm_iris,bg=$bar_bg_disabled_color_option]$left_separator#[fg=$thm_iris,bg=$bar_bg_disabled_color_option]#W"
-        show_window_in_window_status_current="#[fg=$thm_gold,bg=$bar_bg_disabled_color_option]#I#[fg=$thm_gold,bg=$bar_bg_disabled_color_option]$left_separator#[fg=$thm_gold,bg=$bar_bg_disabled_color_option]#W"
-        show_directory_in_window_status="#[fg=$thm_iris,bg=$bar_bg_disabled_color_option]#I#[fg=$thm_iris,bg=$bar_bg_disabled_color_option]$left_separator#[fg=$thm_iris,bg=$bar_bg_disabled_color_option]#{b:pane_current_path}"
-        show_directory_in_window_status_current="#[fg=$thm_gold,bg=$bar_bg_disabled_color_option]#I#[fg=$thm_gold,bg=$bar_bg_disabled_color_option]$left_separator#[fg=$thm_gold,bg=$bar_bg_disabled_color_option]#{b:pane_current_path}"
-        set window-status-style "fg=$thm_iris,bg=$bar_bg_disabled_color_option"
-        set window-status-current-style "fg=$thm_gold,bg=$bar_bg_disabled_color_option"
-        set window-status-activity-style "fg=$thm_rose,bg=$bar_bg_disabled_color_option"
-        set message-style "fg=$thm_muted,bg=$bar_bg_disabled_color_option"
+        set status-style "fg=$thm_pine,bg=#{?client_prefix,$thm_hl_high,$bar_bg_disabled_color_option}"
+        show_window_in_window_status="#[fg=$thm_iris,bg=#{?client_prefix,$thm_hl_high,$bar_bg_disabled_color_option}]#I#[fg=$thm_iris]$left_separator#[fg=$thm_iris]#W"
+        show_window_in_window_status_current="#[fg=$thm_gold,bg=#{?client_prefix,$thm_hl_high,$bar_bg_disabled_color_option}]#I#[fg=$thm_gold]$left_separator#[fg=$thm_gold]#W"
+        show_directory_in_window_status="#[fg=$thm_iris,bg=#{?client_prefix,$thm_hl_high,$bar_bg_disabled_color_option}]#I#[fg=$thm_iris]$left_separator#[fg=$thm_iris]#{b:pane_current_path}"
+        show_directory_in_window_status_current="#[fg=$thm_gold,bg=#{?client_prefix,$thm_hl_high,$bar_bg_disabled_color_option}]#I#[fg=$thm_gold]$left_separator#[fg=$thm_gold]#{b:pane_current_path}"
+        set window-status-style "fg=$thm_iris,bg=#{?client_prefix,$thm_hl_high,$bar_bg_disabled_color_option}"
+        set window-status-current-style "fg=$thm_gold,bg=#{?client_prefix,$thm_hl_high,$bar_bg_disabled_color_option}"
+        set window-status-activity-style "fg=$thm_rose,bg=#{?client_prefix,$thm_hl_high,$bar_bg_disabled_color_option}"
+        set message-style "fg=$thm_muted,bg=#{?client_prefix,$thm_hl_high,$bar_bg_disabled_color_option}"
     fi
 
     # Window appearence switcher: 3 options for the user
